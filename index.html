@@ -14,8 +14,22 @@
         el: '#app',
         data: {
           msg: 'hello vuejs!'
+        },
+        // vue lifecycle
+        beforeCreate: function(){
+          console.log("beforeCreate");
+        },
+        created:function () {
+          console.log("created");
+        },
+        mounted:function () {
+          console.log("mounted");
+          this.msg='hi again vuejs!!'
+        },
+        updated:function () {
+          console.log("updated");
         }
-      })
+      });
     </script>
   </body>
 </html>
