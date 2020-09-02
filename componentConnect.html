@@ -9,6 +9,16 @@
       <my-component1></my-component1>
       <my-component2></my-component2>
     </div>
+    <hr>
+    <h3>상위에서 하위 컴포넌트로 데이터 전달하기</h3>
+    <div id="app2">
+      <first-child-component v-bind:propsdata="message"></first-child-component>
+    </div>
+    <hr>
+    <h3>이벤트 발생시키고 수신하기[하위 > 상위]</h3>
+    <div id="app3">
+      <second-child-component v-on:show-log="printText"></second-child-component>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
     <script>
@@ -30,6 +40,7 @@
             }
           }
       }
+
       // 인스턴스 생성
       new Vue({
         el: '#app',
@@ -40,7 +51,37 @@
         }
       });
 
+      Vue.component('first-child-component',{
+        props:['propsdata']
+        ,template:'<p>{{propsdata}}</p>'
+      });
+      // 인스턴스 생성
+      new Vue({
+        el: '#app2'
+        ,data: {
+          message:'Hello vue! passed from parent component1'
+        }
+      })
 
+      Vue.component('second-child-component',{
+        //버튼 요소 추가
+        template:'<button v-on:click="showLog">show</button>'
+        ,methods:{
+          showLog:function(){
+            //이벤트 발생 로직
+            this.$emit('show-log');
+          }
+        }
+      })
+      // 인스턴스 생성
+      new Vue({
+        el:'#app3'
+        ,methods:{
+          printText: function(){
+            console.log("received an event!");
+          }
+        }
+      });
     </script>
   </body>
 </html>
